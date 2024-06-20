@@ -16,7 +16,7 @@ app.use((req, res, next) => {
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 app.use((error: unknown, req: Request, res: Response, next: NextFunction) => { 
 //This is the global error handling middleware, it will be called if there is an error in the code
-
+ console.log(error);
  let errorMessage = "An Unknown error occurred"; //default error message
  let statusCode = 500; //default status code
   if (isHttpError(error)) {
