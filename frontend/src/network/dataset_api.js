@@ -1,5 +1,5 @@
 export async function getUsers() {
-    const response = await fetch("/users", { method: "GET" });
+    const response = await fetch("/api/users", { method: "GET" });
     if (response.ok) {
         return response.json();
     } else {
