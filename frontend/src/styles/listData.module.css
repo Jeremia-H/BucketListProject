@@ -1,0 +1,13 @@
+.listdataCard {
+    background-color: aqua;
+}
+
+.cardBody {
+    overflow: hidden;
+    mask-image: linear-gradient( #faf9f9, transparent);
+}
+
+.cardText {
+    white-space: pre-line;
+}
+
