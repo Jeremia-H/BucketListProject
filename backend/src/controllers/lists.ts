@@ -44,6 +44,12 @@ export const getList: RequestHandler = async (req, res, next) => {
 interface CreateListBody {
     titel?: string;
     text?: string;
+    Budget?: number;
+    Land?: string;
+    Location?: string;
+    activities?: string;
+    subactivities?: string;
+    category?: string;
 }
 
 export const createList: RequestHandler<unknown, unknown, CreateListBody, unknown> = async (
@@ -54,6 +60,12 @@ export const createList: RequestHandler<unknown, unknown, CreateListBody, unknow
     const titel = req.body.titel;
     const text = req.body.text;
     const authenticatedUserId = req.session.userId;
+    const Budget = req.body.Budget;
+    const Land = req.body.Land;
+    const Location = req.body.Location;
+    const activities = req.body.activities;
+    const subactivities = req.body.subactivities;
+    const category = req.body.category;
     try {
         assertIsDefined(authenticatedUserId);
         if (!titel) {
@@ -65,6 +77,12 @@ export const createList: RequestHandler<unknown, unknown, CreateListBody, unknow
             userId: authenticatedUserId,
             titel: titel,
             text: text,
+            Budget: Budget,
+            Land: Land,
+            Location: Location,
+            activities: activities,
+            subactivities: subactivities,
+            category: category,
         });
 
         res.status(201).json(newList);
@@ -74,7 +92,7 @@ export const createList: RequestHandler<unknown, unknown, CreateListBody, unknow
 };
 
 interface UpdateListParams {
-    listID: string;
+    userID: string;
 }
 
 interface UpdateListBody {
@@ -87,7 +105,7 @@ export const updateList: RequestHandler<UpdateListParams, unknown, UpdateListBod
     res,
     next
 ) => {
-    const listID = req.params.listID;
+    const listID = req.params.userID;
     const newtitel = req.body.titel;
     const newText = req.body.text;
     const authenticatedUserId = req.session.userId;
