@@ -98,6 +98,12 @@ interface UpdateListParams {
 interface UpdateListBody {
     titel?: string;
     text?: string;
+    Budget?: number;
+    Land?: string;
+    Location?: string;
+    activities?: string;
+    subactivities?: string;
+    category?: string;
 }
 
 export const updateList: RequestHandler<UpdateListParams, unknown, UpdateListBody, unknown> = async (
@@ -108,6 +114,12 @@ export const updateList: RequestHandler<UpdateListParams, unknown, UpdateListBod
     const listID = req.params.userID;
     const newtitel = req.body.titel;
     const newText = req.body.text;
+    const newBudget = req.body.Budget;
+    const newLand = req.body.Land;
+    const newLocation = req.body.Location;
+    const newactivities = req.body.activities;
+    const newsubactivities = req.body.subactivities;
+    const newcategory = req.body.category
     const authenticatedUserId = req.session.userId;
 
     try {
@@ -130,6 +142,12 @@ export const updateList: RequestHandler<UpdateListParams, unknown, UpdateListBod
 
         list.titel = newtitel;
         list.text = newText;
+        list.Budget = newBudget;
+        list.Land = newLand;
+        list.Location = newLocation;
+        list.activities = newactivities;
+        list.subactivities = newsubactivities;
+        list.category = newcategory;
 
         const updatedList = await list.save();
 
