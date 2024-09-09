@@ -1,4 +1,4 @@
-import { ConflictError, UnauthorizedError } from "../errors/http_errors";
+import { ConflictError, UnauthorizedError } from "../errors/http_errors.ts";
 import { ListData } from "../models/listdata";
 import { User } from "../models/user";
 
@@ -27,7 +27,6 @@ export async function getLoggedInUser(): Promise<User> {
 
 export interface SignUpCredentials {
   username: string,
-  email: string,
   password: string,
 }
 
@@ -68,15 +67,31 @@ export async function logout() {
 }
 
 
-export async function fetchListDatas(): Promise<ListData[]> {
-  const response = await fetchData("/api/Listdata", {
-    method: "GET",
-  }); //this is the link we setup in the backend to get all of our Listdata, so we use a get request
-  return response.json(); // we then parse the response as json into the Listdatas const and give that to the setListData function we created outside of this
+// listdatas_api.ts
+export async function fetchListDatas() {
+  try {
+      const response = await fetch("/api/listdata");
+      if (!response.ok) {
+          throw new Error("Network response was not ok");
+      }
+      const data = await response.json();
+      console.log("Fetched data:", data); // Debugging log
+      return data;
+  } catch (error) {
+      console.error("Error fetching data:", error);
+      throw error;
+  }
 }
 export interface ListDataInput {
-  titel: string;
-  text: string;
+  title: string;
+  notes: string;
+  budget: number;
+  country: string;
+  city: string;
+  activity: string;
+  actbudget: number;
+  category: string;
+  date: Date;
 }
 
 export async function createListData(

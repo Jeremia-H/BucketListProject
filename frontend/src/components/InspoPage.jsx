@@ -13,6 +13,24 @@ import {ErrorMessage, Field, Form, Formik} from "formik";
 import * as Yup from "yup";
 import {useNavigate} from "react-router-dom";
 import {toast} from "react-toastify";
+import { createListData } from "../network/listdatas_api.ts";
+
+async function onSubmitCreateList(ListdataInput) {
+    try {
+      let ListdataResponse
+      if (ListdataInput) {
+        ListdataResponse = await createListData(
+            ListdataInput
+        );
+      } else {
+        console.log("ListdataInput is empty");
+      }
+      console.log(ListdataResponse);
+    } catch (error) {
+      console.error(error);
+      alert(error);
+    }
+  }
 function InspoPage() {
 
 
@@ -143,6 +161,7 @@ function InspoPage() {
                                     }}
                                     validationSchema={validationSchema}
                                     onSubmit={(values) => {
+                                        onSubmitCreateList(values);
                                         console.log(values);
                                         toast.success('Bucket list item created successfully!', {
                                             position: "top-right",

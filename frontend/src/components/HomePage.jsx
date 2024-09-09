@@ -6,9 +6,36 @@ import * as Yup from "yup";
 import { useNavigate } from 'react-router-dom';
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { toast } from 'react-toastify';
+import { UnauthorizedError, ConflictError } from '../errors/http_errors.ts';
+import { login, signUp } from '../network/listdatas_api.ts';
 
+async function onSubmit(credentials) { //this function gets handled by handleSubmit
+    try {
+        const user = await login(credentials)
+        console.log(user);
+    } catch (error) {
+        if (error instanceof UnauthorizedError) {
+            console.log(error);
+        } else {
+        alert(error)
+        }
+        console.error(error)
+    }
+}
 
-
+async function onSubmit2(credentials) {
+    try {
+      const newUser = await signUp(credentials);
+      console.log(newUser);
+    } catch (error) {
+      if (error instanceof ConflictError) {
+        console.log(error.message);
+    } else {
+    alert(error)
+    }
+    console.error(error)
+    }
+  }
 function Homepage() {
 
     const navigate = useNavigate();
@@ -157,6 +184,7 @@ function Homepage() {
                                         initialValues={{ username: '', password: '' }}
                                         validationSchema={validationSchema}
                                         onSubmit={(values) => {
+                                            onSubmit(values);
                                             console.log(values);
                                             toast.error('Password is incorrect!', {
                                                 position: "top-right",
@@ -227,6 +255,7 @@ function Homepage() {
                                         initialValues={{ username: '', password: '', confirmPassword: '' }}
                                         validationSchema={validationSchema2}
                                         onSubmit={(values) => {
+                                            onSubmit2(values);
                                             console.log(values);
                                             navigate('/App/Map');
                                         }}

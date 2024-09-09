@@ -20,16 +20,14 @@ try {
 
 interface SignUpBody {
     username?: string,
-    email?: string,
     password?: string,
 }
 
 export const signUp: RequestHandler<unknown, unknown, SignUpBody, unknown> = async (req, res, next) => {
     const username = req.body.username;
-    const email = req.body.email;
     const passwordRaw = req.body.password;
     try {
-        if (!username || !email || !passwordRaw)
+        if (!username || !passwordRaw)
         {
             throw createHttpError(400, "Parameters missing");
         }
@@ -40,17 +38,10 @@ export const signUp: RequestHandler<unknown, unknown, SignUpBody, unknown> = asy
             throw createHttpError(409, "Username already taken. Please choose a different one or log in instead.");
         }
 
-        const existingEmail = await UserModel.findOne({ email: email}).exec();
-
-        if (existingEmail) {
-            throw createHttpError(409, "Email already taken. Please choose a different one or log in instead.");
-        }
-
         const passwordHashed = await bcrypt.hash(passwordRaw, 10);
 
         const newUser = await UserModel.create({
             username: username,
-            email: email,
             password: passwordHashed,
         });
 
@@ -79,6 +70,7 @@ export const login: RequestHandler<unknown, unknown, LoginBody, unknown> = async
             const user = await UserModel.findOne({username: username}).select("+password +email").exec();
 
             if (!user) {
+                console.log("Invalid credentials");
                 throw createHttpError(401, "Invalid credentials");
             }
 

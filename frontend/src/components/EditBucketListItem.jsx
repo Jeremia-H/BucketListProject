@@ -15,11 +15,50 @@ import {LuConstruction} from "react-icons/lu";
 import {useLocation, useNavigate} from "react-router-dom";
 import {toast} from "react-toastify";
 import { FaArrowLeft } from "react-icons/fa";
+import { updateListData } from "../network/listdatas_api.ts";
+import {createListData} from "../network/listdatas_api.ts";
+console.log()
+async function onSubmitCreateList(ListdataInput) {
+    try {
+      let ListdataResponse
+      if (ListdataInput) {
+        ListdataResponse = await createListData(
+            ListdataInput
+        );
+      } else {
+        console.log("ListdataInput is empty");
+      }
+      console.log(ListdataResponse);
+    } catch (error) {
+      console.error(error);
+      alert(error);
+    }
+  }
+async function onSubmitEdit(id, input) {
+    try {
+      let ListdataResponse
+      console.log("id:" + id);
+      console.log("input:" + input);
+      if (input) {
+        ListdataResponse = await updateListData(
+          id,
+          input
+        );
+      } else {
+        console.log("No input data");
+      }
+      console.log(ListdataResponse);
+    } catch (error) {
+      console.error(error);
+      alert(error);
+    }
+  }
 
 function EditBucketListItem() {
 
     const location = useLocation();
-    const {title, country, city, activity, category, budget, actbudget, date, notes} = location.state || {};
+    const {title, country, city, activity, category, budget, actbudget, date, notes, id} = location.state || {};
+    console.log("location state!!" + location.state.id);
 
     let images = [
             {img: '/catImages/couple.png', cat: 'Adventure/Outdoor'},
@@ -139,6 +178,8 @@ function EditBucketListItem() {
                     validationSchema={validationSchema2}
                     onSubmit={(values) => {
                         console.log(values);
+                        onSubmitEdit(location.state._id, values);
+                        console.log(location.state._id, values);
                         toast.success('Bucket list item updated successfully!', {
                             position: "top-right",
                             autoClose: 3000, // Auto close after 3 seconds
@@ -593,6 +634,7 @@ function EditBucketListItem() {
                                     }}
                                     validationSchema={validationSchema}
                                     onSubmit={(values) => {
+                                        onSubmitCreateList(values);
                                         console.log(values);
                                         toast.success('Bucket list item created successfully!', {
                                             position: "top-right",

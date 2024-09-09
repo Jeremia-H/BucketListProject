@@ -10,16 +10,53 @@ import {MdOpenInNew} from "react-icons/md";
 import {IoOpenOutline} from "react-icons/io5";
 import {ErrorMessage, Field, Form, Formik} from "formik";
 import * as Yup from "yup";
-import {useState} from "react";
+import {useState, useEffect} from "react";
 import {useNavigate} from "react-router-dom";
 import {toast} from "react-toastify";
+import  { fetchListDatas, createListData  } from "../network/listdatas_api.ts";
+
+async function onSubmitCreateList(ListdataInput) {
+    try {
+      let ListdataResponse
+      if (ListdataInput) {
+        ListdataResponse = await createListData(
+            ListdataInput
+        );
+      } else {
+        console.log("ListdataInput is empty");
+      }
+      console.log(ListdataResponse);
+    } catch (error) {
+      console.error(error);
+      alert(error);
+    }
+  }
+
 
 function BucketLists() {
     const [isOpen, setIsOpen] = useState(false);
-
+    const [bucketListItems, setBucketListItems] = useState([]);
     const navigate = useNavigate();
 
-    const bucketListItems = [
+    useEffect(() => {
+        async function fetchData() {
+            try {
+                const data = await fetchListDatas();
+                console.log("Data fetched in useEffect:", data); // Debugging log
+                setBucketListItems(data);
+                console.log("State after setting data:", bucketListItems); // Debugging log
+            } catch (error) {
+                console.error("Error fetching bucket list data:", error);
+                toast.error("Failed to fetch bucket list data");
+            }
+        }
+        fetchData();
+    }, []);
+    
+    useEffect(() => {
+        console.log("State after setting data:", bucketListItems); // Debugging log
+    }, [bucketListItems]);
+    /*[
         {
             id:1,
             title: "Scuba Diving in the Great Barrier Reef",
@@ -80,9 +117,9 @@ function BucketLists() {
             date: "2024-06-05",
             notes: "A chance to see the 'Big Five' and witness the annual wildebeest migration.",
         },
-    ];
+    ];*/
 
-    const openItem = (title, country, city, activity, category, budget, actbudget, date, notes) => {
+    const openItem = (title, country, city, activity, category, budget, actbudget, date, notes, _id, userId) => {
         const dataToSend = {
             title: title,
             country: country,
@@ -93,8 +130,10 @@ function BucketLists() {
             actbudget: actbudget,
             date: date,
             notes: notes,
+            userId: userId,
+            _id: _id,
         };
-
+console.log("datatosend:", dataToSend)
         navigate('/App/BucketLists/EditBucketList', {state: dataToSend});
     }
     const openModal = () => {
@@ -150,6 +189,7 @@ function BucketLists() {
             <main
                 className="flex-1 bg-customBg flex-initial  flex flex-col gap-10 py-10 lg:grid lg:grid-cols-2 lg:w-[70rem] lg:auto-rows-[20rem] lg:mx-auto">
                 {bucketListItems.map((item) => (
+
                     <div key={item.id} className="mx-auto my-auto border-black border-2 w-72 rounded-xl bg-white sm:w-96 lg:h-60 lg:w-[30rem]">
                     <div className="flex mr-6 items-center rounded-xl rounded-b mb-3 font-bold text-lg sm:text-xl">
                     <img src={`/png100px/${item.country}.png`}
@@ -170,7 +210,9 @@ function BucketLists() {
                         item.budget,
                         item.actbudget,
                         item.date,
-                        item.notes
+                        item.notes,
+                        item._id,
+                        item.userId
                         )}>
                     <IoOpenOutline className="size-6 mx-auto sm:size-7" />
                     </button>
@@ -229,6 +271,21 @@ function BucketLists() {
                                     }}
                                     validationSchema={validationSchema}
                                     onSubmit={(values) => {
+                                        onSubmitCreateList(values);
+                                    
+                                        /*
+                                        *⠀⠀⠀⠀⠀⠀⢀⣀⣀⣀⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣀⣀⠀⠀⠀⠀⠀
+                                        ⠀⠀⠀⠀⠀⠀⣾⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⠀⠀⠀⠀⢀⠀⠈⡇⠀⠀⠀⠀
+                                        ⠀⠀⠀⠀⠀⠀⣿⠀⠁⠀⠘⠁⠀⠀⠀⠀⠀⣀⡀⠀⠀⠀⠈⠀⠀⡇⠀⠀⠀⠀
+                                        ⣀⣀⣀⠀⠀⠀⣿⠀⠀⠀⠀⠀⠄⠀⠀⠸⢰⡏⠉⠳⣄⠰⠀⠀⢰⣷⠶⠛⣧⠀
+                                        ⢻⡀⠈⠙⠲⡄⣿⠀⠀⠀⠀⠀⠀⠀⠠⠀⢸⠀⠀⠀⠈⠓⠒⠒⠛⠁⠀⠀⣿⠀
+                                        ⠀⠻⣄⠀⠀⠙⣿⠀⠀⠀⠈⠁⠀⢠⠄⣰⠟⠀⢀⡔⢠⠀⠀⠀⠀⣠⠠⡄⠘⢧
+                                        ⠀⠀⠈⠛⢦⣀⣿⠀⠀⢠⡆⠀⠀⠈⠀⣯⠀⠀⠈⠛⠛⠀⠠⢦⠄⠙⠛⠃⠀⢸
+                                        ⠀⠀⠀⠀⠀⠉⣿⠀⠀⠀⢠⠀⠀⢠⠀⠹⣆⠀⠀⠀⠢⢤⠠⠞⠤⡠⠄⠀⢀⡾
+                                        ⠀⠀⠀⠀⠀⢀⡿⠦⢤⣤⣤⣤⣤⣤⣤⣤⡼⣷⠶⠤⢤⣤⣤⡤⢤⡤⠶⠖⠋⠀
+                                        ⠀⠀⠀⠀⠀⠸⣤⡴⠋⠸⣇⣠⠼⠁⠀⠀⠀⠹⣄⣠⠞⠀⢾⡀⣠⠃⠀⠀⠀⠀
+                                        ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠁⠀⠀⠀⠀⠀⠀
+                                        */
                                         console.log(values);
                                         toast.success('Bucket list item created successfully!', {
                                             position: "top-right",

@@ -42,14 +42,15 @@ export const getList: RequestHandler = async (req, res, next) => {
 };
 
 interface CreateListBody {
-    titel?: string;
-    text?: string;
-    Budget?: number;
-    Land?: string;
-    Location?: string;
-    activities?: string;
-    subactivities?: string;
+    title?: string;
+    notes?: string;
+    budget?: number;
+    country?: string;
+    city?: string;
+    activity?: string;
+    actbudget?: number;
     category?: string;
+    date?: Date;
 }
 
 export const createList: RequestHandler<unknown, unknown, CreateListBody, unknown> = async (
@@ -57,53 +58,56 @@ export const createList: RequestHandler<unknown, unknown, CreateListBody, unknow
     res,
     next
 ) => {
-    const titel = req.body.titel;
-    const text = req.body.text;
+    const title = req.body.title;
+    const notes = req.body.notes;
     const authenticatedUserId = req.session.userId;
-    const Budget = req.body.Budget;
-    const Land = req.body.Land;
-    const Location = req.body.Location;
-    const activities = req.body.activities;
-    const subactivities = req.body.subactivities;
+    const budget = req.body.budget;
+    const country = req.body.country;
+    const city = req.body.city;
+    const activity = req.body.activity;
+    const actbudget = req.body.actbudget;
     const category = req.body.category;
+    const date = req.body.date;
     try {
         assertIsDefined(authenticatedUserId);
-        if (!titel) {
+        if (!title) {
             console.log(req.body);
             throw createHttpError(400, "List must have a titel create");
         }
 
-        const newList = await listModel.create({
+        const newList = new listModel({
             userId: authenticatedUserId,
-            titel: titel,
-            text: text,
-            Budget: Budget,
-            Land: Land,
-            Location: Location,
-            activities: activities,
-            subactivities: subactivities,
-            category: category,
+            title,
+            notes,
+            budget,
+            country,
+            city,
+            activity,
+            actbudget,
+            category,
+            date,
         });
-
-        res.status(201).json(newList);
+const savedList = await newList.save();
+        res.status(201).json(savedList);
     } catch (error) {
         next(error);
     }
 };
 
 interface UpdateListParams {
-    userID: string;
+    listdataID: string;
 }
 
 interface UpdateListBody {
-    titel?: string;
-    text?: string;
-    Budget?: number;
-    Land?: string;
-    Location?: string;
-    activities?: string;
-    subactivities?: string;
+    title?: string;
+    notes?: string;
+    budget?: number;
+    country?: string;
+    city?: string;
+    activity?: string;
+    actbudget?: number;
     category?: string;
+    date?: Date;
 }
 
 export const updateList: RequestHandler<UpdateListParams, unknown, UpdateListBody, unknown> = async (
@@ -111,15 +115,16 @@ export const updateList: RequestHandler<UpdateListParams, unknown, UpdateListBod
     res,
     next
 ) => {
-    const listID = req.params.userID;
-    const newtitel = req.body.titel;
-    const newText = req.body.text;
-    const newBudget = req.body.Budget;
-    const newLand = req.body.Land;
-    const newLocation = req.body.Location;
-    const newactivities = req.body.activities;
-    const newsubactivities = req.body.subactivities;
-    const newcategory = req.body.category
+    const listID = req.params.listdataID;
+    const newTitle = req.body.title;
+    const newNotes = req.body.notes;
+    const newBudget = req.body.budget;
+    const newCountry = req.body.country;
+    const newCity = req.body.city;
+    const newActivity = req.body.activity;
+    const newActbudget = req.body.actbudget;
+    const newCategory = req.body.category;
+    const newDate = req.body.date;
     const authenticatedUserId = req.session.userId;
 
     try {
@@ -128,7 +133,7 @@ export const updateList: RequestHandler<UpdateListParams, unknown, UpdateListBod
         if (!mongoose.isValidObjectId(listID)) {
             throw createHttpError(400, "Invalid list ID");
         }
-        if (!newtitel) {
+        if (!newTitle) {
             throw createHttpError(400, "List must have a titel");
         }
         const list = await listModel.findById(listID).exec();
@@ -140,14 +145,16 @@ export const updateList: RequestHandler<UpdateListParams, unknown, UpdateListBod
             throw createHttpError(401, "You cannot access this list");
         }
 
-        list.titel = newtitel;
-        list.text = newText;
-        list.Budget = newBudget;
-        list.Land = newLand;
-        list.Location = newLocation;
-        list.activities = newactivities;
-        list.subactivities = newsubactivities;
-        list.category = newcategory;
+
+        list.title = newTitle;
+        list.notes = newNotes;
+        list.budget = newBudget;
+        list.country = newCountry;
+        list.city = newCity;
+        list.activity = newActivity;
+        list.actbudget = newActbudget;
+        list.category = newCategory;
+        list.date = newDate;
 
         const updatedList = await list.save();
 

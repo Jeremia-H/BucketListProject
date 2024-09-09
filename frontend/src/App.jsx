@@ -6,8 +6,8 @@ import './index.css'
 import './tailwind.css'
 import 'leaflet/dist/leaflet.css';
 import 'react-toastify/dist/ReactToastify.css';
-
-
+import { useEffect } from 'react';
+import { getLoggedInUser } from './network/listdatas_api.ts';
 import Documentation from './components/Documentation';
 import NotFound from './components/NotFound';
 import InspoPage from "./components/InspoPage";
@@ -19,6 +19,19 @@ import MapPage from "./components/MapPage";
 import EditBucketListItem from "./components/EditBucketListItem";
 import { ToastContainer } from 'react-toastify';
 function App() {
+
+  useEffect(() => {
+    async function fetchLoggedInUser() {
+      try {
+        const user = await getLoggedInUser();
+        console.log(user);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    fetchLoggedInUser();
+  }, []);
+
   return (
       <>
       <Router>

@@ -14,6 +14,24 @@ import * as Yup from "yup";
 import { LuConstruction } from "react-icons/lu";
 import {useNavigate} from "react-router-dom";
 import {toast} from "react-toastify";
+import {createListData} from "../network/listdatas_api.ts";
+async function onSubmitCreateList(ListdataInput) {
+    try {
+      let ListdataResponse
+      if (ListdataInput) {
+        ListdataResponse = await createListData(
+            ListdataInput
+        );
+      } else {
+        console.log("ListdataInput is empty");
+      }
+      console.log(ListdataResponse);
+    } catch (error) {
+      console.error(error);
+      alert(error);
+    }
+  }
+
 function FriendsPage() {
 
 
@@ -141,6 +159,7 @@ function FriendsPage() {
                                     }}
                                     validationSchema={validationSchema}
                                     onSubmit={(values) => {
+                                        onSubmitCreateList(values);
                                         console.log(values);
                                         toast.success('Bucket list item created successfully!', {
                                             position: "top-right",
