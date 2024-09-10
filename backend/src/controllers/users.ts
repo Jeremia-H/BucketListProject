@@ -35,6 +35,7 @@ export const signUp: RequestHandler<unknown, unknown, SignUpBody, unknown> = asy
         const existingUsername = await UserModel.findOne({ username: username}).exec();
 
         if (existingUsername) {
+            console.log("Username already taken. Please choose a different one or log in instead.");
             throw createHttpError(409, "Username already taken. Please choose a different one or log in instead.");
         }
 
