@@ -444,7 +444,8 @@ console.log("datatosend:", dataToSend)
                              item.budget,
                              item.actbudget,
                              item.date,
-                             item.notes
+                             item.notes,
+                             item._id
                          )}
                          className="relative mx-auto my-auto border-black border-0 h-72 w-56 sm:h-80 sm:w-60 lg:h-82 lg:w-64 hover:scale-105">
                         <img

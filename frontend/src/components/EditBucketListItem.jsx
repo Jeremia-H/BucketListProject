@@ -38,7 +38,7 @@ async function onSubmitEdit(id, input) {
     try {
       let ListdataResponse
       console.log("id:" + id);
-      console.log("input:" + input);
+      console.log("input:", input);
       if (input) {
         ListdataResponse = await updateListData(
           id,
@@ -69,8 +69,8 @@ const getUpdatedFields = (initial, current) => {
 function EditBucketListItem() {
 
     const location = useLocation();
-    const {title, country, city, activity, category, budget, actbudget, date, notes, id} = location.state || {};
-    console.log("location state!!" + location.state.id);
+    const {title, country, city, activity, category, budget, actbudget, date, notes, _id} = location.state || {};
+    console.log("location state!!" + _id);
 
     let images = [
             {img: '/catImages/couple.png', cat: 'Adventure/Outdoor'},
@@ -163,6 +163,17 @@ function EditBucketListItem() {
             .nullable(),
     });
 
+    const initialValues = {
+        title: title || '',        // Pre-filled from page 1
+        country: country || '',    // Pre-filled from page 1
+        city: city || '',          // Pre-filled from page 1
+        activity: activity || '',  // Pre-filled from page 1
+        category: category || '',  // Pre-filled from page 1
+        budget: budget || '',      // Pre-filled from page 1
+        actbudget: actbudget || '',// Pre-filled from page 1
+        notes: notes || '',        // Pre-filled from page 1
+        date: date || '',          // Pre-filled from page 1
+    };
     return (
 
         <div className="w-full flex flex-col h-screen bg-customBg">
@@ -176,17 +187,7 @@ function EditBucketListItem() {
 
             <div className="flex-1 flex flex-col justify-center mx-auto w-[40rem]">
                 <Formik
-                    initialValues={{
-                        title: title || '',        // For the title field
-                        country: country || '',    // For the country dropdown (optional)
-                        city: city || '',          // For the city field (optional, but required if country is selected)
-                        activity: activity || '',  // For the activity field
-                        category: category || '',  // For the category dropdown
-                        budget: budget || '',      // For the budget field (number with 2 decimals)
-                        actbudget: actbudget || '',// For the actual budget field
-                        notes: notes || '',        // For the notes textarea (free text)
-                        date: date || '',          // For the date field (required)
-                    }}
+                    initialValues={initialValues}
                     validationSchema={validationSchema2}
                     onSubmit={(values) => {
                         console.log(values);
@@ -211,8 +212,8 @@ function EditBucketListItem() {
                         } else {
                             console.log("Updated fields to send to backend:", updatedFields);
 
-                            onSubmitEdit(location.state._id, values);
-                            console.log(location.state._id, values);
+                            onSubmitEdit(_id, values);
+                            console.log(_id, values);
                             toast.success('Bucket list item updated successfully!', {
                                 position: "top-right",
                                 autoClose: 3000,
