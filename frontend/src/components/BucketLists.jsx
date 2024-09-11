@@ -27,8 +27,8 @@ async function onSubmitCreateList(ListdataInput) {
       }
       console.log(ListdataResponse);
     } catch (error) {
+        console.log("ist hier was passiert?")
       console.error(error);
-      alert(error);
     }
   }
 
