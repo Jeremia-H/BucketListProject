@@ -96,13 +96,13 @@ function Homepage() {
     return (
 
         <div className="lg:flex flex-col h-screen hide-scrollbar">
-            <div className="h-24 bg-white flex align-items-center justify-center gap-56">
-                <div className="flex gap-40">
+            <div className="h-24 bg-white flex align-items-center mx-2 sm:m-0 justify-center gap-56">
+                <div className="flex gap-6 sm:gap-36 md:gap-40">
                     <div className="h-24 bg-white flex align-items-center justify-center gap-2">
-                        <GoGoal className="size-10"></GoGoal>
-                        <h1 className="w-24 font-kalam text-lg">Bucket List</h1>
+                        <GoGoal className="size-8 sm:size-10"></GoGoal>
+                        <h1 className="w-16 hidden sm:block sm:w-24 lg:w-32 font-kalam sm:text-lg lg:text-2xl">Bucket List</h1>
                     </div>
-                    <ul className="w-full justify-end md:flex md:gap-4 lg:gap-8 list-none m-0 p-0 text-xs md:text-sm lg:text-base 3xl:text-xl text-customGreen font-medium font-nonito items-center">
+                    <ul className="w-full justify-end flex gap-2 sm:!gap-4 lg:!gap-8 list-none m-0 p-0 text-xs sm:text-sm lg:text-base 3xl:text-xl text-customGreen font-medium font-nonito items-center">
                         <li className="relative group">
                             <a href="/">Home</a>
                             <span
@@ -121,14 +121,14 @@ function Homepage() {
                         </li>
                         <li>
                                 <button
-                                    className={`${hovered3 ? 'bg-[#f9f8fd] text-[#000000]' : 'bg-customPurple text-white'} md:w-28 lg:w-36 3xl:w-40 text-xs rounded-tl-3xl rounded-bl-3xl py-2 px-3 lg:text-base 3xl:text-xl hover:bg-customPurple`}
+                                    className={`${hovered3 ? 'bg-[#f9f8fd] text-[#000000]' : 'bg-customPurple text-white'} ml-2 w-16 sm:w-20 sm:m-0 md:w-28 lg:w-36 3xl:w-40 text-xs rounded-tl-3xl rounded-bl-3xl py-2 px-3 lg:text-base 3xl:text-xl hover:bg-customPurple`}
                                     onClick={openModal}>
                                     Login
                                 </button>
                         </li>
                         <li className="md:-ml-3 lg:-ml-7">
                                 <button
-                                    className=" md:w-28 lg:w-36 3xl:w-40 text-xs bg-customCardBg rounded-tr-3xl rounded-br-3xl py-2 px-3 lg:text-base 3xl:text-xl hover:bg-customPurple hover:text-white"
+                                    className="w-20 -ml-1 sm:-ml-3 md:m-0 md:w-28 lg:w-36 3xl:w-40 text-xs bg-customCardBg rounded-tr-3xl rounded-br-3xl py-2 px-3 lg:text-base 3xl:text-xl hover:bg-customPurple hover:text-white"
                                     onMouseEnter={() => setHovered3(true)}
                                     onMouseLeave={() => setHovered3(false)}
                                     onClick={openModal2}>
@@ -147,7 +147,7 @@ function Homepage() {
                     className="absolute inset-0 w-full h-full object-cover z-0"
                 />
                 <div className="relative z-10 flex flex-col items-center justify-center h-full">
-                    <p className="text-[#E6E6FA] font-kalam text-lg lg:text-4xl font-bold lg:w-1/2 ">
+                    <p className="text-[#E6E6FA] font-kalam text-lg sm:text-xl md:text-3xl lg:text-4xl font-bold w-2/3 lg:w-1/2 ">
                         Unleash Your Adventure: Create, Explore, and Conquer Your Ultimate Bucket List!
                     </p>
                     <button onClick={openModal} className="mx-auto text-[#E6E6FA] border-[#E6E6FA] mt-10 rounded-lg p-3 bg-transparent border-2 hover:scale-105 hover:text-white hover:border-white">Start today</button>
@@ -166,7 +166,7 @@ function Homepage() {
 
                     {/* Dialog-Fenster */}
                     <div className="fixed inset-0 flex items-center justify-center z-50 font-nonito">
-                        <div className="bg-white pb-8 rounded-lg shadow-lg w-2/5 xl:w-96 mx-auto">
+                        <div className="bg-white pb-8 rounded-lg shadow-lg w-2/3 sm:w-1/2 lg:w-2/5 xl:w-96 mx-auto">
                             {/* Fenster 1 */}
                             {currentWindow === 1 && (
                                 <div>
