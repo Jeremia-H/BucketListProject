@@ -74,7 +74,6 @@ function Homepage() {
 
     const validationSchema2 = Yup.object({
         username: Yup.string()
-            .email('Invalid Email')
             .required('Required'),
         password: Yup.string()
             .min(8, 'Min. 8 characters')
@@ -86,7 +85,6 @@ function Homepage() {
 
     const validationSchema = Yup.object({
         username: Yup.string()
-            .email('Invalid Email')
             .required('Required'),
         password: Yup.string()
             .min(8, 'Min. 8 characters')
@@ -202,10 +200,10 @@ function Homepage() {
                                             <Form onSubmit={handleSubmit} className="flex flex-col w-full gap-2">
                                                 <div className="flex flex-col mx-4">
                                                     <label>Username</label>
-                                                    <Field
+                                                     <Field
                                                         name="username"
-                                                        type="email"
-                                                        placeholder="name.lastname@gmail.com"
+                                                        type="input"
+                                                        placeholder="user18X"
                                                         className="border-1 rounded-lg focus:outline-customPurple"
                                                     />
                                                     <ErrorMessage name="username" component="div" className="text-red-500 text-sm" />
@@ -264,10 +262,10 @@ function Homepage() {
                                             <Form onSubmit={handleSubmit} className="flex flex-col w-full gap-2">
                                                 <div className="flex flex-col mx-4">
                                                     <label>Username</label>
-                                                    <Field
+                                                     <Field
                                                         name="username"
-                                                        type="email"
-                                                        placeholder="name.lastname@gmail.com"
+                                                        type="input"
+                                                        placeholder="user18X"
                                                         className="border-1 rounded-lg focus:outline-customPurple"
                                                     />
                                                     <ErrorMessage name="username" component="div" className="text-red-500 text-sm" />
