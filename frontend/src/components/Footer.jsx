@@ -6,9 +6,9 @@ import {FaSquareXTwitter} from "react-icons/fa6";
 
 function Footer() {
     return (
-        <div className="w-full grid grid-cols-2 grid-cols-12 py-2 bg-customGreen text-black">
+        <div className="h-24 w-full grid grid-cols-12 py-2 bg-customGreen text-black">
             <div
-                className="col-start-2 mx-8 lg:m-0 col-span-1 md:m-0 md:col-start-6 md:col-span-2 col-start-3 col-span-2 font-nonito">
+                className="col-start-1 col-span-6 sm:col-start-1 sm:col-span-4 mx-8 md:col-start-2 md:col-span-2 md:m-0 font-nonito">
                 <h4 className="text-lg xl:text-xl 3xl:text-2xl font-medium font-kalam">QUICK LINKS</h4>
                 <span className="block w-full border-t border-black mb-3"></span>
 
@@ -23,7 +23,7 @@ function Footer() {
                 </a>
             </div>
             <div
-                className="col-start-1 ml-8 md:col-start-9 md:col-span-3 md:m-0 lg:m-0 col-start-6 font-nonito col-span-2 ">
+                className="col-start-7 col-span-5 sm:col-start-5 sm:ml-8 sm:col-span-4 md:col-start-5 md:col-span-4  font-nonito col-span-2 ">
                 <h4 className="text-lg xl:text-xl 3xl:text-2xl font-kalam font-medium">CONTACT</h4>
                 <span className="block w-full border-t border-black mb-3"></span>
                 <div className="flex items-center gap-1 mb-3 hover:text-customPurple cursor-pointer">
@@ -40,7 +40,7 @@ function Footer() {
                 </div>
             </div>
             <div
-                className="lg:col-start-9 mx-8 mt-8 lg:m-0 md:col-start-6 md:m-0 md:mt-8 md:col-span-2 col-span-1 font-karla">
+                className="col-start-1 col-span-5 sm:col-start-10 sm:col-span-3 md:col-start-10 md:col-span-2 mx-8 md:m-0 font-karla">
                 <h4 className="text-lg xl:text-xl 3xl:text-2xl font-kalam font-medium ">SOCIALS</h4>
                 <span className="block w-full border-t border-black mb-3"></span>
                 <div className="flex">
