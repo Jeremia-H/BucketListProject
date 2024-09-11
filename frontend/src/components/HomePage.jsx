@@ -93,7 +93,7 @@ function Homepage() {
 
     return (
 
-        <div className="lg:flex flex-col h-screen hide-scrollbar">
+        <div className="flex flex-col h-screen hide-scrollbar">
             <div className="h-24 bg-white flex align-items-center mx-2 sm:m-0 justify-center gap-56">
                 <div className="flex gap-6 sm:gap-36 md:gap-40">
                     <div className="h-24 bg-white flex align-items-center justify-center gap-2">
