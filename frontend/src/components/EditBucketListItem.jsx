@@ -54,6 +54,18 @@ async function onSubmitEdit(id, input) {
     }
   }
 
+const getUpdatedFields = (initial, current) => {
+        const updatedFields = {};
+
+        Object.keys(initial).forEach(key => {
+            if (initial[key] !== current[key]) {
+                updatedFields[key] = current[key];  // Only store fields that are updated
+            }
+        });
+
+        return updatedFields;
+    };
+
 function EditBucketListItem() {
 
     const location = useLocation();
@@ -178,18 +190,40 @@ function EditBucketListItem() {
                     validationSchema={validationSchema2}
                     onSubmit={(values) => {
                         console.log(values);
-                        onSubmitEdit(location.state._id, values);
-                        console.log(location.state._id, values);
-                        toast.success('Bucket list item updated successfully!', {
-                            position: "top-right",
-                            autoClose: 3000, // Auto close after 3 seconds
-                            hideProgressBar: false,
-                            closeOnClick: true,
-                            pauseOnHover: true,
-                            draggable: true,
-                            progress: undefined,
-                        });
-                        closeModal();
+
+                        console.log('Submitted values:', values);
+
+
+                        const updatedFields = getUpdatedFields(initialValues, values);
+
+                        console.log("Updated fields:", updatedFields);
+
+                        if (Object.keys(updatedFields).length === 0) {
+                            toast.info('No changes detected', {
+                                position: "top-right",
+                                autoClose: 3000,
+                                hideProgressBar: false,
+                                closeOnClick: true,
+                                pauseOnHover: true,
+                                draggable: true,
+                                progress: undefined,
+                            });
+                        } else {
+                            console.log("Updated fields to send to backend:", updatedFields);
+
+                            onSubmitEdit(location.state._id, values);
+                            console.log(location.state._id, values);
+                            toast.success('Bucket list item updated successfully!', {
+                                position: "top-right",
+                                autoClose: 3000,
+                                hideProgressBar: false,
+                                closeOnClick: true,
+                                pauseOnHover: true,
+                                draggable: true,
+                                progress: undefined,
+                            });
+                            goToBucketListsPage();
+                        }
                     }}
                 >
                     {({handleSubmit}) => (
@@ -199,7 +233,7 @@ function EditBucketListItem() {
                                 <Field
                                     name="title"
                                     type="input"
-                                    value={title}
+                                   
                                     className="border-1 rounded-lg focus:outline-customPurple"
                                 />
                                 <ErrorMessage name="title" component="div"
@@ -212,7 +246,7 @@ function EditBucketListItem() {
                                     <Field
                                         name="country"
                                         as="select"
-                                        value={country}
+                                       
                                         className="border-1 rounded-lg focus:outline-customPurple"
                                     >
                                         <option value="" disabled selected hidden>Choose a destination
@@ -478,7 +512,7 @@ function EditBucketListItem() {
                                     <Field
                                         name="city"
                                         type="input"
-                                        value={city}
+                                        
                                         placeholder="city"
                                         className="border-1 rounded-lg focus:outline-customPurple"
                                     >
@@ -492,7 +526,7 @@ function EditBucketListItem() {
                                 <Field
                                     name="activity"
                                     type="input"
-                                    value={activity}
+                                    
                                     className="border-1 rounded-lg focus:outline-customPurple"
                                 />
                                 <ErrorMessage name="activity" component="div"
@@ -505,7 +539,7 @@ function EditBucketListItem() {
                                     <Field
                                         name="category"
                                         as="select"
-                                        value={category}
+                                    
                                         className="border-1 rounded-lg focus:outline-customPurple"
                                     >
                                         <option value="Adventure/Outdoor">Adventure/Outdoor</option>
@@ -524,7 +558,7 @@ function EditBucketListItem() {
                                     <Field
                                         name="date"
                                         type="date"
-                                        value={date}
+                                       
                                         className="border-1 rounded-lg focus:outline-customPurple"
                                     />
                                     <ErrorMessage name="date" component="div"
@@ -539,7 +573,7 @@ function EditBucketListItem() {
                                     <Field
                                         name="budget"
                                         type="input"
-                                        value={budget}
+                                        
                                         className=" border-1 rounded-lg focus:outline-customPurple"
                                     />
                                     <span className="absolute right-2 top-[1.55rem] text-black">€</span>
@@ -552,7 +586,7 @@ function EditBucketListItem() {
                                     <Field
                                         name="actbudget"
                                         type="input"
-                                        value={actbudget}
+                                       
                                         placeholder="600.00"
                                         className=" border-1 rounded-lg focus:outline-customPurple"
                                     />
@@ -568,7 +602,7 @@ function EditBucketListItem() {
                                     name="notes"
                                     as="textarea"
                                     placeholder="Some text"
-                                    value={notes}
+                                   
                                     className="border-1 rounded-lg h-[5rem] focus:outline-customPurple overflow-auto resize-none"
                                     wrap="soft"
                                 />
@@ -614,13 +648,12 @@ function EditBucketListItem() {
                     ></div>
 
                     {/* Dialog-Fenster */}
-                    <div className="fixed inset-0 flex items-center justify-center z-50 font-nonito">
-                        <div className="bg-white pb-8 rounded-lg shadow-lg w-2/5 xl:w-[32rem] mx-auto">
+                    <div className="fixed inset-0 flex items-center justify-center z-50 font-nonito p-4 sm:p-0">
+                        <div className="bg-white pb-8 mb-16 sm:pb-8 rounded-lg shadow-lg w-full sm:w-2/3 xl:w-[48rem] sm:mx-auto max-h-[90vh] overflow-auto">
                             <div>
                                 <div className="flex justify-around my-4">
                                     <h2 className="font-bold">Create new Bucket List Item</h2>
                                 </div>
-
                                 <Formik
                                     initialValues={{
                                         title: '',        // For the title field
@@ -663,7 +696,7 @@ function EditBucketListItem() {
                                             </div>
 
                                             <div className="flex justify-between mx-4 gap-4">
-                                                <div className="flex flex-col w-1/2">
+                                                <div className="flex flex-col w-2/5 md:w-1/2">
                                                     <label>Country</label>
                                                     <Field
                                                         name="country"
@@ -671,8 +704,7 @@ function EditBucketListItem() {
                                                         placeholder="Australia"
                                                         className="border-1 rounded-lg focus:outline-customPurple"
                                                     >
-                                                        <option value="" disabled selected hidden>Choose a destination
-                                                        </option>
+                                                        <option value="" disabled selected hidden>Choose a destination</option>
                                                         <option value="AF">Afghanistan</option>
                                                         <option value="AX">Åland Islands</option>
                                                         <option value="AL">Albania</option>
@@ -723,8 +755,7 @@ function EditBucketListItem() {
                                                         <option value="CO">Colombia</option>
                                                         <option value="KM">Comoros</option>
                                                         <option value="CG">Congo</option>
-                                                        <option value="CD">Congo, The Democratic Republic of The
-                                                        </option>
+                                                        <option value="CD">Congo, The Democratic Republic of The</option>
                                                         <option value="CK">Cook Islands</option>
                                                         <option value="CR">Costa Rica</option>
                                                         <option value="CI">Cote D'ivoire</option>
@@ -789,8 +820,7 @@ function EditBucketListItem() {
                                                         <option value="KZ">Kazakhstan</option>
                                                         <option value="KE">Kenya</option>
                                                         <option value="KI">Kiribati</option>
-                                                        <option value="KP">Korea, Democratic People's Republic of
-                                                        </option>
+                                                        <option value="KP">Korea, Democratic People's Republic of</option>
                                                         <option value="KR">Korea, Republic of</option>
                                                         <option value="KW">Kuwait</option>
                                                         <option value="KG">Kyrgyzstan</option>
@@ -804,8 +834,7 @@ function EditBucketListItem() {
                                                         <option value="LT">Lithuania</option>
                                                         <option value="LU">Luxembourg</option>
                                                         <option value="MO">Macao</option>
-                                                        <option value="MK">Macedonia, The Former Yugoslav Republic of
-                                                        </option>
+                                                        <option value="MK">Macedonia, The Former Yugoslav Republic of</option>
                                                         <option value="MG">Madagascar</option>
                                                         <option value="MW">Malawi</option>
                                                         <option value="MY">Malaysia</option>
@@ -878,9 +907,7 @@ function EditBucketListItem() {
                                                         <option value="SB">Solomon Islands</option>
                                                         <option value="SO">Somalia</option>
                                                         <option value="ZA">South Africa</option>
-                                                        <option value="GS">South Georgia and The South Sandwich
-                                                            Islands
-                                                        </option>
+                                                        <option value="GS">South Georgia and The South Sandwich Islands</option>
                                                         <option value="ES">Spain</option>
                                                         <option value="LK">Sri Lanka</option>
                                                         <option value="SD">Sudan</option>
@@ -929,7 +956,7 @@ function EditBucketListItem() {
                                                                   className="text-red-500 text-sm"/>
                                                 </div>
 
-                                                <div className="flex flex-col w-1/2">
+                                                <div className="flex flex-col w-2/5 md:w-1/2">
                                                     <label>City</label>
                                                     <Field
                                                         name="city"
@@ -963,8 +990,7 @@ function EditBucketListItem() {
                                                         placeholder="Water Sports/Beach"
                                                         className="border-1 rounded-lg focus:outline-customPurple"
                                                     >
-                                                        <option value="" disabled selected hidden>Choose a category
-                                                        </option>
+                                                        <option value="" disabled selected hidden>Choose a category</option>
                                                         <option>Adventure/Outdoor</option>
                                                         <option>Water Sports/Beach</option>
                                                         <option>Cultural/Heritage</option>
@@ -985,7 +1011,7 @@ function EditBucketListItem() {
                                                         placeholder="600.00"
                                                         className=" border-1 rounded-lg focus:outline-customPurple"
                                                     />
-                                                    <span className="absolute right-2 top-[1.55rem] text-black">€</span>
+                                                    <span className="absolute right-1 top-[1.55rem] text-black">€</span>
                                                     <ErrorMessage name="budget" component="div"
                                                                   className="text-red-500 text-sm"/>
                                                 </div>
