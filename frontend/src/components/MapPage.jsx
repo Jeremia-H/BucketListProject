@@ -141,8 +141,8 @@ function MapPage() {
                     ></div>
 
                     {/* Dialog-Fenster */}
-                    <div className="fixed inset-0 flex items-center justify-center z-50 font-nonito">
-                        <div className="bg-white pb-8 rounded-lg shadow-lg w-2/5 xl:w-[32rem] mx-auto">
+                     <div className="fixed inset-0 flex items-center justify-center z-50 font-nonito p-4 sm:p-0">
+                        <div className="bg-white pb-8 mb-16 sm:pb-8 rounded-lg shadow-lg w-full sm:w-2/3 xl:w-[48rem] sm:mx-auto max-h-[90vh] overflow-auto">
                             <div>
                                 <div className="flex justify-around my-4">
                                     <h2 className="font-bold">Create new Bucket List Item</h2>
@@ -177,7 +177,7 @@ function MapPage() {
                                 >
                                     {({handleSubmit}) => (
                                         <Form onSubmit={handleSubmit} className="flex flex-col w-full gap-2">
-                                            <div className="flex flex-col mx-4">
+                                           <div className="flex flex-col mx-4">
                                                 <label>Title</label>
                                                 <Field
                                                     name="title"
@@ -190,7 +190,7 @@ function MapPage() {
                                             </div>
 
                                             <div className="flex justify-between mx-4 gap-4">
-                                                <div className="flex flex-col w-1/2">
+                                                <div className="flex flex-col w-2/5 md:w-1/2">
                                                     <label>Country</label>
                                                     <Field
                                                         name="country"
@@ -450,7 +450,7 @@ function MapPage() {
                                                                   className="text-red-500 text-sm"/>
                                                 </div>
 
-                                                <div className="flex flex-col w-1/2">
+                                                <div className="flex flex-col w-2/5 md:w-1/2">
                                                     <label>City</label>
                                                     <Field
                                                         name="city"
@@ -505,7 +505,7 @@ function MapPage() {
                                                         placeholder="600.00"
                                                         className=" border-1 rounded-lg focus:outline-customPurple"
                                                     />
-                                                    <span className="absolute right-2 top-[1.55rem] text-black">€</span>
+                                                    <span className="absolute right-1 top-[1.55rem] text-black">€</span>
                                                     <ErrorMessage name="budget" component="div"
                                                                   className="text-red-500 text-sm"/>
                                                 </div>
