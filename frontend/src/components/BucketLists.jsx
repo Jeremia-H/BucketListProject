@@ -32,6 +32,251 @@ async function onSubmitCreateList(ListdataInput) {
     }
   }
 
+const countryMapping = {
+        AF: 'Afghanistan',
+        AX: 'Åland Islands',
+        AL: 'Albania',
+        DZ: 'Algeria',
+        AS: 'American Samoa',
+        AD: 'Andorra',
+        AO: 'Angola',
+        AI: 'Anguilla',
+        AQ: 'Antarctica',
+        AG: 'Antigua and Barbuda',
+        AR: 'Argentina',
+        AM: 'Armenia',
+        AW: 'Aruba',
+        AU: 'Australia',
+        AT: 'Austria',
+        AZ: 'Azerbaijan',
+        BS: 'Bahamas',
+        BH: 'Bahrain',
+        BD: 'Bangladesh',
+        BB: 'Barbados',
+        BY: 'Belarus',
+        BE: 'Belgium',
+        BZ: 'Belize',
+        BJ: 'Benin',
+        BM: 'Bermuda',
+        BT: 'Bhutan',
+        BO: 'Bolivia',
+        BA: 'Bosnia and Herzegovina',
+        BW: 'Botswana',
+        BV: 'Bouvet Island',
+        BR: 'Brazil',
+        IO: 'British Indian Ocean Territory',
+        BN: 'Brunei Darussalam',
+        BG: 'Bulgaria',
+        BF: 'Burkina Faso',
+        BI: 'Burundi',
+        KH: 'Cambodia',
+        CM: 'Cameroon',
+        CA: 'Canada',
+        CV: 'Cape Verde',
+        KY: 'Cayman Islands',
+        CF: 'Central African Republic',
+        TD: 'Chad',
+        CL: 'Chile',
+        CN: 'China',
+        CX: 'Christmas Island',
+        CC: 'Cocos (Keeling) Islands',
+        CO: 'Colombia',
+        KM: 'Comoros',
+        CG: 'Congo',
+        CD: 'Congo, The Democratic Republic of The',
+        CK: 'Cook Islands',
+        CR: 'Costa Rica',
+        CI: 'Cote D\'ivoire',
+        HR: 'Croatia',
+        CU: 'Cuba',
+        CY: 'Cyprus',
+        CZ: 'Czech Republic',
+        DK: 'Denmark',
+        DJ: 'Djibouti',
+        DM: 'Dominica',
+        DO: 'Dominican Republic',
+        EC: 'Ecuador',
+        EG: 'Egypt',
+        SV: 'El Salvador',
+        GQ: 'Equatorial Guinea',
+        ER: 'Eritrea',
+        EE: 'Estonia',
+        ET: 'Ethiopia',
+        FK: 'Falkland Islands (Malvinas)',
+        FO: 'Faroe Islands',
+        FJ: 'Fiji',
+        FI: 'Finland',
+        FR: 'France',
+        GF: 'French Guiana',
+        PF: 'French Polynesia',
+        TF: 'French Southern Territories',
+        GA: 'Gabon',
+        GM: 'Gambia',
+        GE: 'Georgia',
+        DE: 'Germany',
+        GH: 'Ghana',
+        GI: 'Gibraltar',
+        GR: 'Greece',
+        GL: 'Greenland',
+        GD: 'Grenada',
+        GP: 'Guadeloupe',
+        GU: 'Guam',
+        GT: 'Guatemala',
+        GG: 'Guernsey',
+        GN: 'Guinea',
+        GW: 'Guinea-bissau',
+        GY: 'Guyana',
+        HT: 'Haiti',
+        HM: 'Heard Island and Mcdonald Islands',
+        VA: 'Holy See (Vatican City State)',
+        HN: 'Honduras',
+        HK: 'Hong Kong',
+        HU: 'Hungary',
+        IS: 'Iceland',
+        IN: 'India',
+        ID: 'Indonesia',
+        IR: 'Iran, Islamic Republic of',
+        IQ: 'Iraq',
+        IE: 'Ireland',
+        IM: 'Isle of Man',
+        IL: 'Israel',
+        IT: 'Italy',
+        JM: 'Jamaica',
+        JP: 'Japan',
+        JE: 'Jersey',
+        JO: 'Jordan',
+        KZ: 'Kazakhstan',
+        KE: 'Kenya',
+        KI: 'Kiribati',
+        KP: 'Korea, Democratic People\'s Republic of',
+        KR: 'Korea, Republic of',
+        KW: 'Kuwait',
+        KG: 'Kyrgyzstan',
+        LA: 'Lao People\'s Democratic Republic',
+        LV: 'Latvia',
+        LB: 'Lebanon',
+        LS: 'Lesotho',
+        LR: 'Liberia',
+        LY: 'Libyan Arab Jamahiriya',
+        LI: 'Liechtenstein',
+        LT: 'Lithuania',
+        LU: 'Luxembourg',
+        MO: 'Macao',
+        MK: 'Macedonia, The Former Yugoslav Republic of',
+        MG: 'Madagascar',
+        MW: 'Malawi',
+        MY: 'Malaysia',
+        MV: 'Maldives',
+        ML: 'Mali',
+        MT: 'Malta',
+        MH: 'Marshall Islands',
+        MQ: 'Martinique',
+        MR: 'Mauritania',
+        MU: 'Mauritius',
+        YT: 'Mayotte',
+        MX: 'Mexico',
+        FM: 'Micronesia, Federated States of',
+        MD: 'Moldova, Republic of',
+        MC: 'Monaco',
+        MN: 'Mongolia',
+        ME: 'Montenegro',
+        MS: 'Montserrat',
+        MA: 'Morocco',
+        MZ: 'Mozambique',
+        MM: 'Myanmar',
+        NA: 'Namibia',
+        NR: 'Nauru',
+        NP: 'Nepal',
+        NL: 'Netherlands',
+        AN: 'Netherlands Antilles',
+        NC: 'New Caledonia',
+        NZ: 'New Zealand',
+        NI: 'Nicaragua',
+        NE: 'Niger',
+        NG: 'Nigeria',
+        NU: 'Niue',
+        NF: 'Norfolk Island',
+        MP: 'Northern Mariana Islands',
+        NO: 'Norway',
+        OM: 'Oman',
+        PK: 'Pakistan',
+        PW: 'Palau',
+        PS: 'Palestinian Territory, Occupied',
+        PA: 'Panama',
+        PG: 'Papua New Guinea',
+        PY: 'Paraguay',
+        PE: 'Peru',
+        PH: 'Philippines',
+        PN: 'Pitcairn',
+        PL: 'Poland',
+        PT: 'Portugal',
+        PR: 'Puerto Rico',
+        QA: 'Qatar',
+        RE: 'Reunion',
+        RO: 'Romania',
+        RU: 'Russian Federation',
+        RW: 'Rwanda',
+        SH: 'Saint Helena',
+        KN: 'Saint Kitts and Nevis',
+        LC: 'Saint Lucia',
+        PM: 'Saint Pierre and Miquelon',
+        VC: 'Saint Vincent and The Grenadines',
+        WS: 'Samoa',
+        SM: 'San Marino',
+        ST: 'Sao Tome and Principe',
+        SA: 'Saudi Arabia',
+        SN: 'Senegal',
+        RS: 'Serbia',
+        SC: 'Seychelles',
+        SL: 'Sierra Leone',
+        SG: 'Singapore',
+        SK: 'Slovakia',
+        SI: 'Slovenia',
+        SB: 'Solomon Islands',
+        SO: 'Somalia',
+        ZA: 'South Africa',
+        GS: 'South Georgia and The South Sandwich Islands',
+        ES: 'Spain',
+        LK: 'Sri Lanka',
+        SD: 'Sudan',
+        SR: 'Suriname',
+        SJ: 'Svalbard and Jan Mayen',
+        SZ: 'Swaziland',
+        SE: 'Sweden',
+        CH: 'Switzerland',
+        SY: 'Syrian Arab Republic',
+        TW: 'Taiwan',
+        TJ: 'Tajikistan',
+        TZ: 'Tanzania, United Republic of',
+        TH: 'Thailand',
+        TL: 'Timor-leste',
+        TG: 'Togo',
+        TK: 'Tokelau',
+        TO: 'Tonga',
+        TT: 'Trinidad and Tobago',
+        TN: 'Tunisia',
+        TR: 'Turkey',
+        TM: 'Turkmenistan',
+        TC: 'Turks and Caicos Islands',
+        TV: 'Tuvalu',
+        UG: 'Uganda',
+        UA: 'Ukraine',
+        AE: 'United Arab Emirates',
+        GB: 'United Kingdom',
+        US: 'United States',
+        UY: 'Uruguay',
+        UZ: 'Uzbekistan',
+        VU: 'Vanuatu',
+        VE: 'Venezuela',
+        VN: 'Viet Nam',
+        VG: 'Virgin Islands, British',
+        VI: 'Virgin Islands, U.S.',
+        WF: 'Wallis and Futuna',
+        EH: 'Western Sahara',
+        YE: 'Yemen',
+        ZM: 'Zambia',
+        ZW: 'Zimbabwe'
+    };
 
 function BucketLists() {
     const [isOpen, setIsOpen] = useState(false);
@@ -186,38 +431,61 @@ console.log("datatosend:", dataToSend)
         <div className="w-full flex flex-col h-screen bg-customBg">
 
 
-            <main
-                className="flex-1 bg-customBg flex-initial  flex flex-col gap-10 py-10 lg:grid lg:grid-cols-2 lg:w-[70rem] lg:auto-rows-[20rem] lg:mx-auto">
+             <main
+                className="flex-1 bg-customBg flex-initial  flex flex-col gap-10 py-10 pb-32 sm:grid sm:grid-cols-2 md:grid-cols-3 lg:w-[70rem] lg:mx-auto">
                 {bucketListItems.map((item) => (
+                    <div key={item.id}
+                         onClick={() => openItem(
+                             item.title,
+                             item.country,
+                             item.city,
+                             item.activity,
+                             item.category,
+                             item.budget,
+                             item.actbudget,
+                             item.date,
+                             item.notes
+                         )}
+                         className="relative mx-auto my-auto border-black border-0 h-72 w-56 sm:h-80 sm:w-60 lg:h-82 lg:w-64 hover:scale-105">
+                        <img
+                            alt="image"
+                            src="/catImages/img.png"
+                            className="absolute rounded-[1.1rem] inset-0 w-full h-full object-cover z-0"
+                        />
 
-                    <div key={item.id} className="mx-auto my-auto border-black border-2 w-72 rounded-xl bg-white sm:w-96 lg:h-60 lg:w-[30rem]">
-                    <div className="flex mr-6 items-center rounded-xl rounded-b mb-3 font-bold text-lg sm:text-xl">
-                    <img src={`/png100px/${item.country}.png`}
-                    style={{borderRadius: '0.6rem 0 2rem 0', borderBottomRightRadius: '50%'}}
-                    className="bg-customPurple size-12" alt="Flag"/>
-                    <h3 className="ml-3 line-clamp-1 text-ellipsis">{item.title}</h3>
-                    </div>
-                    <h4 className="mx-6 mb-3 text-ellipsis line-clamp-2 text-sm sm:line-clamp-3 sm:text-base">
-                        {item.activity}</h4>
-                    <hr className="mb-3 mx-4"></hr>
-                    <div className="flex justify-between mb-3 items-center">
-                    <button className="ml-6 rounded-lg h-8 hover:text-customPurple" onClick={() => openItem(
-                        item.title,
-                        item.country,
-                        item.city,
-                        item.activity,
-                        item.category,
-                        item.budget,
-                        item.actbudget,
-                        item.date,
-                        item.notes,
-                        item._id,
-                        item.userId
-                        )}>
-                    <IoOpenOutline className="size-6 mx-auto sm:size-7" />
-                    </button>
-                    <p className="mr-6 text-xs text-red-500 sm:text-sm">Starts in 10 days</p>
-                    </div>
+                        {/* Flag and Title - moved out of the overlay */}
+                        <div className="absolute z-50 flex w-full justify-between items-center">
+                            <img
+                                src={`/png100px/${item.country}.png`}
+                                style={{borderRadius: '0.6rem 0 2rem 0', borderBottomRightRadius: '50%'}}
+                                className=" size-12"
+                                alt="Flag"
+                            />
+                            <p
+                                style={{borderRadius:  '0 0.6rem 0 2rem', borderBottomLeftRadius: '50%'}}
+                                className="
+    bg-white
+    font-bold
+    text-center
+    size-12
+    flex
+    items-center
+    justify-center
+    text-customPurple"
+                            >
+                                {item.budget < 100 ? '$' : item.budget < 1000 ? '$$' : '$$$'}
+                            </p>
+                        </div>
+
+                        {/* Overlay */}
+                        <div
+                            className="absolute inset-0 bg-black opacity-[30%] transition-opacity duration-500 rounded-[1.1rem]"></div>
+
+                        {/* Bottom text - stays inside the overlay */}
+                        <div className="absolute bottom-3 left-4 z-50">
+                            <h2 className="font-bold text-white line-clamp-1 mr-4">{item.title}</h2>
+                            <p className="text-white line-clamp-1 mr-4">{countryMapping[item.country]}, {item.city}</p>
+                        </div>
                     </div>))}
             </main>
 
@@ -251,13 +519,13 @@ console.log("datatosend:", dataToSend)
                     ></div>
 
                     {/* Dialog-Fenster */}
-                    <div className="fixed inset-0 flex items-center justify-center z-50 font-nonito">
-                        <div className="bg-white pb-8 rounded-lg shadow-lg w-2/5 xl:w-[32rem] mx-auto">
+                   <div className="fixed inset-0 flex items-center justify-center z-50 font-nonito p-4 sm:p-0">
+                        <div
+                            className="bg-white pb-8 mb-16 sm:pb-8 rounded-lg shadow-lg w-full sm:w-2/3 xl:w-[48rem] sm:mx-auto max-h-[90vh] overflow-auto">
                             <div>
                                 <div className="flex justify-around my-4">
                                     <h2 className="font-bold">Create new Bucket List Item</h2>
                                 </div>
-
                                 <Formik
                                     initialValues={{
                                         title: '',        // For the title field
@@ -304,7 +572,7 @@ console.log("datatosend:", dataToSend)
                                 >
                                     {({handleSubmit}) => (
                                         <Form onSubmit={handleSubmit} className="flex flex-col w-full gap-2">
-                                            <div className="flex flex-col mx-4">
+                                             <div className="flex flex-col mx-4">
                                                 <label>Title</label>
                                                 <Field
                                                     name="title"
@@ -317,7 +585,7 @@ console.log("datatosend:", dataToSend)
                                             </div>
 
                                             <div className="flex justify-between mx-4 gap-4">
-                                                <div className="flex flex-col w-1/2">
+                                                <div className="flex flex-col w-2/5 md:w-1/2">
                                                     <label>Country</label>
                                                     <Field
                                                         name="country"
@@ -583,7 +851,7 @@ console.log("datatosend:", dataToSend)
                                                                   className="text-red-500 text-sm"/>
                                                 </div>
 
-                                                <div className="flex flex-col w-1/2">
+                                                <div className="flex flex-col w-2/5 md:w-1/2">
                                                     <label>City</label>
                                                     <Field
                                                         name="city"
@@ -639,7 +907,7 @@ console.log("datatosend:", dataToSend)
                                                         placeholder="600.00"
                                                         className=" border-1 rounded-lg focus:outline-customPurple"
                                                     />
-                                                    <span className="absolute right-2 top-[1.55rem] text-black">€</span>
+                                                    <span className="absolute right-1 top-[1.55rem] text-black">€</span>
                                                     <ErrorMessage name="budget" component="div"
                                                                   className="text-red-500 text-sm"/>
                                                 </div>
