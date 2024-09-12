@@ -91,7 +91,8 @@ function MapPage() {
             .max(250, 'Notes max. 250 chars'),
         date: Yup.date()
             .required('Date is required')
-            .nullable(),
+            .nullable()
+          .min(new Date(), 'Date must be in the future'),
     });
 
     return (
