@@ -278,6 +278,15 @@ const countryMapping = {
         ZW: 'Zimbabwe'
     };
 
+const categoryMapping = {
+        'Water Sports/Beach': '/catImages/img.png',
+        'Adventure/Outdoor': '/catImages/img2.png',
+        'Cultural/Heritage': '/catImages/img3.png',
+        'Food & Drink': '/catImages/img4.png',
+        'Wellness & Relaxation': '/catImages/img5.png',
+        'Skills & Education': '/catImages/img6.png',
+    };
+
 function BucketLists() {
     const [isOpen, setIsOpen] = useState(false);
     const [bucketListItems, setBucketListItems] = useState([]);
@@ -451,7 +460,7 @@ console.log("datatosend:", dataToSend)
                          className="relative mx-auto my-auto border-black border-0 h-72 w-56 sm:h-80 sm:w-60 lg:h-82 lg:w-64 hover:scale-105">
                         <img
                             alt="image"
-                            src="/catImages/img.png"
+                            src={countryMapping[item.category]}
                             className="absolute rounded-[1.1rem] inset-0 w-full h-full object-cover z-0"
                         />
 
