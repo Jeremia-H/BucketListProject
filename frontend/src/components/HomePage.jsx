@@ -184,9 +184,11 @@ function Homepage() {
                                         initialValues={{ username: '', password: '' }}
                                         validationSchema={validationSchema}
                                         onSubmit={(values) => {
-                                            onSubmit(values);
+                                            const res = onSubmit(values);
                                             console.log(values);
-                                            toast.error('Password is incorrect!', {
+
+                                            if (res instanceof Error) {
+                                                toast.error('Password is incorrect!', {
                                                 position: "top-right",
                                                 autoClose: 3000, // Auto close after 3 seconds
                                                 hideProgressBar: false,
@@ -195,7 +197,20 @@ function Homepage() {
                                                 draggable: true,
                                                 progress: undefined,
                                             });
-                                            navigate('/App/Map');
+                                            }
+                                            else{
+                                             toast.success(`Logged in as ${res.username}`, {
+                                                position: "top-right",
+                                                autoClose: 3000, // Auto close after 3 seconds
+                                                hideProgressBar: false,
+                                                closeOnClick: true,
+                                                pauseOnHover: true,
+                                                draggable: true,
+                                                progress: undefined,
+                                            });
+                                                navigate('/App/Map');
+                                            }
+                                            
                                         }}
                                     >
                                         {({ handleSubmit }) => (
@@ -255,9 +270,32 @@ function Homepage() {
                                         initialValues={{ username: '', password: '', confirmPassword: '' }}
                                         validationSchema={validationSchema2}
                                         onSubmit={(values) => {
-                                            onSubmit2(values);
+                                            const res = onSubmit2(values);
                                             console.log(values);
-                                            navigate('/App/Map');
+
+                                            if (res instanceof Error) {
+                                                toast.error('Password is incorrect!', {
+                                                position: "top-right",
+                                                autoClose: 3000, // Auto close after 3 seconds
+                                                hideProgressBar: false,
+                                                closeOnClick: true,
+                                                pauseOnHover: true,
+                                                draggable: true,
+                                                progress: undefined,
+                                            });
+                                            }
+                                            else{
+                                             toast.success(`Signed up as ${res.username}`, {
+                                                position: "top-right",
+                                                autoClose: 3000, // Auto close after 3 seconds
+                                                hideProgressBar: false,
+                                                closeOnClick: true,
+                                                pauseOnHover: true,
+                                                draggable: true,
+                                                progress: undefined,
+                                            });
+                                                navigate('/App/Map');
+                                            }
                                         }}
                                     >
                                         {({ handleSubmit }) => (
