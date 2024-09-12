@@ -13,13 +13,14 @@ async function onSubmit(credentials) { //this function gets handled by handleSub
     try {
         const user = await login(credentials)
         console.log(user);
+        return user;
     } catch (error) {
         if (error instanceof UnauthorizedError) {
             console.log(error);
         } else {
-        alert(error)
         }
         console.error(error)
+        return error;
     }
 }
 
@@ -27,13 +28,14 @@ async function onSubmit2(credentials) {
     try {
       const newUser = await signUp(credentials);
       console.log(newUser);
+        return newUser;
     } catch (error) {
       if (error instanceof ConflictError) {
         console.log(error.message);
     } else {
-    alert(error)
     }
     console.error(error)
+        return error;
     }
   }
 function Homepage() {
