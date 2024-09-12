@@ -1,0 +1,15 @@
+export interface ListData {
+    _id: string,
+    titel: string,
+    text?: string,
+    Datum?: string,
+    Budget?: number,
+    actualBudget?: number,
+    Land?: string,
+    Location?: string,
+    activities?: string,
+    subactivities?: string,
+    createdAt: string,
+    updateAt: string,
+    __v?: string,
+}
