@@ -423,7 +423,8 @@ console.log("datatosend:", dataToSend)
             .max(250, 'Notes max. 250 chars'),
         date: Yup.date()
             .required('Date is required')
-            .nullable(),
+            .nullable()
+        .min(new Date(), 'Date must be in the future'),
     });
 
     return (
@@ -456,12 +457,16 @@ console.log("datatosend:", dataToSend)
 
                         {/* Flag and Title - moved out of the overlay */}
                         <div className="absolute z-50 flex w-full justify-between items-center">
-                            <img
-                                src={`/png100px/${item.country}.png`}
-                                style={{borderRadius: '0.6rem 0 2rem 0', borderBottomRightRadius: '50%'}}
-                                className=" size-12"
-                                alt="Flag"
-                            />
+                           {item.country && item.country.trim() !== '' ? (
+                                <img
+                                    src={`/png100px/${item.country}.png`}
+                                    style={{ borderRadius: '0.6rem 0 2rem 0', borderBottomRightRadius: '50%' }}
+                                    className=" size-12"
+                                    alt="Flag"
+                                />
+                            ) : (
+                                <div className="size-12"></div> // Placeholder div with the same size as the image
+                            )}
                             <p
                                 style={{borderRadius:  '0 0.6rem 0 2rem', borderBottomLeftRadius: '50%'}}
                                 className="
@@ -483,9 +488,15 @@ console.log("datatosend:", dataToSend)
                             className="absolute inset-0 bg-black opacity-[30%] transition-opacity duration-500 rounded-[1.1rem]"></div>
 
                         {/* Bottom text - stays inside the overlay */}
-                        <div className="absolute bottom-3 left-4 z-50">
+                         <div className="absolute bottom-3 left-4 z-50">
                             <h2 className="font-bold text-white line-clamp-1 mr-4">{item.title}</h2>
-                            <p className="text-white line-clamp-1 mr-4">{countryMapping[item.country]}, {item.city}</p>
+                            {(item.country || item.city) && (
+                                <p className="text-white line-clamp-1 mr-4">
+                                    {item.country && item.country.trim() !== '' ? countryMapping[item.country] : ''}
+                                    {(item.country && item.country.trim() !== '') && (item.city && item.city.trim() !== '') ? ', ' : ''}
+                                    {item.city && item.city.trim() !== '' ? item.city : ''}
+                                </p>
+                            )}
                         </div>
                     </div>))}
             </main>
