@@ -28,7 +28,7 @@ function Footer() {
                 <span className="block w-full border-t border-black mb-3"></span>
                 <div className="flex items-center gap-1 mb-3 hover:text-customPurple cursor-pointer">
                     <MdLocationPin className="size-4 xl:size-5 2xl:size-6 3xl:size-7"></MdLocationPin>
-                    <p className="text-sm xl:text-base 3xl:text-xl">Berlin, Germany</p>
+                    <p className="text-sm xl:text-base 3xl:text-xl">Siegen, Germany</p>
                 </div>
                 <div className="flex items-end gap-1 mb-3 hover:text-customPurple cursor-pointer">
                     <BsFillTelephoneFill className="size-4 xl:size-5 2xl:size-6 3xl:size-7"></BsFillTelephoneFill>

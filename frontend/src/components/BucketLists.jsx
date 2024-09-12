@@ -8,6 +8,7 @@ import {FaPlus} from "react-icons/fa";
 import {IoIosArrowForward} from "react-icons/io";
 import {MdOpenInNew} from "react-icons/md";
 import {IoOpenOutline} from "react-icons/io5";
+import { BiHappyBeaming } from "react-icons/bi";
 import { CgLogOut } from "react-icons/cg";
 import {ErrorMessage, Field, Form, Formik} from "formik";
 import * as Yup from "yup";
@@ -456,9 +457,12 @@ console.log("datatosend:", dataToSend)
                 <CgLogOut className="size-4 lg:size-5 text-white"></CgLogOut>
             </button>
 
+            {bucketListItems.length > 0 ? (
              <main
                 className="flex-1 bg-customBg flex-initial  flex flex-col gap-10 py-10 pb-32 sm:grid sm:grid-cols-2 sm:w-[35rem] md:w-[50rem] lg:grid-cols-3 lg:w-[70rem] sm:mx-auto">
-                {bucketListItems.map((item) => (
+
+
+                 {bucketListItems.map((item) => (
                     <div key={item.id}
                          onClick={() => openItem(
                              item.title,
@@ -522,8 +526,25 @@ console.log("datatosend:", dataToSend)
                                 </p>
                             )}
                         </div>
-                    </div>))}
-            </main>
+                    </div>
+            ))}
+                </main>) : (
+
+                 <div className="flex flex-col items-center justify-center text-center w-[20rem] sm:w-[30rem] h-full mx-auto">
+                         <BiHappyBeaming className="size-32 text-customPurple" />
+                         <p className="mt-4">
+                             🧐 Uh-oh! Your bucket list is looking a little... empty. <br />
+                             It's time to dream big, my friend! Whether it's swimming with dolphins or becoming the world's greatest pancake flipper, the world is waiting for your epic plans.
+                             Don't let your future self down—start adding those wild adventures! 🚀✨
+                         </p>
+                         <button
+                             className="bg-customPurple text-white p-2 mt-4 rounded-full hover:scale-105"
+                             onClick={openModal}
+                         >
+                             Add Bucket List Item
+                         </button>
+                     </div>
+                     )}
 
             <div
                 className="h-20 bg-white fixed-bottom flex flex-row justify-center align-items-center gap-11 sm:gap-14 md:gap-16 lg:gap-20">

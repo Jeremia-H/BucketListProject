@@ -35,7 +35,7 @@ function App() {
   return (
       <>
       <Router>
-        <Routes>
+        <Routes >
           <Route path="/" element={<HomePage />} />
           <Route path="/App/Inspiration" element={<InspoPage />} />
           <Route path="/App/Friends" element={<FriendsPage />} />

@@ -125,6 +125,7 @@ function EditBucketListItem() {
             .required('Budget is required')
             .min(0, 'Budget cannot be negative')
             .max(1000000, 'Budget cannot exceed 1,000,000')
+            .typeError('Must be a number')
             .test('is-decimal', 'Budget must have 2 decimal places', (value) =>
                 /^\d+(\.\d{1,2})?$/.test(value)
             ),
@@ -150,15 +151,20 @@ function EditBucketListItem() {
             .required('Budget is required')
             .min(0, 'Budget cannot be negative')
             .max(1000000, 'Budget cannot exceed 1,000,000')
+            .typeError('Must be a number')
             .test('is-decimal', 'Budget must have 2 decimal places', (value) =>
                 /^\d+(\.\d{1,2})?$/.test(value)
             ),
         actbudget: Yup.number()
             .min(0, 'Actual Budget cannot be negative')
             .max(1000000, ' Actual Budget cannot exceed 1,000,000')
-            .test('is-decimal', 'Actual Budget must have 2 decimal places', (value) =>
-                /^\d+(\.\d{1,2})?$/.test(value)
-            ),
+            .typeError('Must be a number')
+            .test('is-decimal', 'Actual Budget must have 2 decimal places', (value) => {
+                if (value === null || value === undefined || value === '') {
+                    return true; // Skip validation if the field is empty
+                }
+                return /^\d+(\.\d{1,2})?$/.test(value); // Only validate when the field has a value
+            }),
         notes: Yup.string()
             .max(250, 'Notes max. 250 chars'),
         date: Yup.date()
@@ -166,6 +172,14 @@ function EditBucketListItem() {
             .nullable()
           .min(new Date(), 'Date must be in the future'),
     });
+
+    function formatDateForInput(dateString) {
+        const date = new Date(dateString);
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are 0-indexed
+        const day = String(date.getDate()).padStart(2, '0');
+        return `${year}-${month}-${day}`;
+    }
 
     const initialValues = {
         title: title || '',        // Pre-filled from page 1
@@ -176,8 +190,10 @@ function EditBucketListItem() {
         budget: budget || '',      // Pre-filled from page 1
         actbudget: actbudget || '',// Pre-filled from page 1
         notes: notes || '',        // Pre-filled from page 1
-        date: date || '',          // Pre-filled from page 1
+        date: formatDateForInput(date) || '',          // Pre-filled from page 1
     };
+
+    console.log(formatDateForInput(date));
     return (
 
         <div className="w-full flex flex-col h-screen bg-customBg">

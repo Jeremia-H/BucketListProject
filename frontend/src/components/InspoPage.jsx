@@ -86,6 +86,7 @@ function InspoPage() {
             .required('Budget is required')
             .min(0, 'Budget cannot be negative')
             .max(1000000, 'Budget cannot exceed 1,000,000')
+            .typeError('Must be a number')
             .test('is-decimal', 'Budget must have 2 decimal places', (value) =>
                 /^\d+(\.\d{1,2})?$/.test(value)
             ),
