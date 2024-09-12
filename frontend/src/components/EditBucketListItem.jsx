@@ -130,7 +130,8 @@ function EditBucketListItem() {
             .max(250, 'Notes max. 250 chars'),
         date: Yup.date()
             .required('Date is required')
-            .nullable(),
+            .nullable()
+          .min(new Date(), 'Date must be in the future'),
     });
 
     const validationSchema2 = Yup.object().shape({
@@ -160,7 +161,8 @@ function EditBucketListItem() {
             .max(250, 'Notes max. 250 chars'),
         date: Yup.date()
             .required('Date is required')
-            .nullable(),
+            .nullable()
+          .min(new Date(), 'Date must be in the future'),
     });
 
     const initialValues = {
